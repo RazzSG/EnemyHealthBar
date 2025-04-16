@@ -1,0 +1,42 @@
+Configs: {
+	HealthBarConfig: {
+		DisplayName: Конфигурация
+
+		Style: {
+			Label: Стиль шкалы
+			Tooltip: ""
+		}
+
+		DepletionDirection: {
+			Label: Вычет здоровья
+			Tooltip: Определяет, как отображается полученный урон.
+		}
+
+		ColorA: {
+			Label: Цвет A
+			Tooltip: Определяет цвет основной волны.
+		}
+
+		ColorB: {
+			Label: Цвет B
+			Tooltip: Определяет цвет подложки волны.
+		}
+
+		HealthInfo: {
+			Label: Отображение здоровья
+			Tooltip: Отображает текущий уровень здоровья врага в %, размещённый над полоской здоровья.
+		}
+	}
+
+	HealthBarStyles: {
+		Tooltip: ""
+		Default.Label: Ванилла
+		Fancy.Label: Модная
+	}
+
+	DepletionDirection: {
+		Symmetrical.Label: Симметричный
+		RightToLeft.Label: Справа налево
+		Tooltip: ""
+	}
+}

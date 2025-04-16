@@ -1,0 +1,2 @@
+This mod adds a new, fancy, and fully customizable enemy health bar. It doesn't replace the default bar, but offers an alternative with improved visuals.
+The mod is fully compatible with multiplayer and doesn't conflict with other mods. Each player can set their own preference - if you prefer the classic vanilla health bar, you can always switch back to it.

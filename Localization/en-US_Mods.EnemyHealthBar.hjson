@@ -1,0 +1,42 @@
+Configs: {
+	HealthBarConfig: {
+		DisplayName: Configuration
+
+		Style: {
+			Label: Bar Style
+			Tooltip: ""
+		}
+
+		DepletionDirection: {
+			Label: Health Depletion
+			Tooltip: Determines how received damage is visually displayed.
+		}
+
+		ColorA: {
+			Label: Color A
+			Tooltip: Defines the main wave color.
+		}
+
+		ColorB: {
+			Label: Color B
+			Tooltip: Defines the background wave color.
+		}
+
+		HealthInfo: {
+			Label: Health Display
+			Tooltip: Displays the enemy's current health percentage above the health bar.
+		}
+	}
+
+	HealthBarStyles: {
+		Tooltip: ""
+		Default.Label: Vanilla
+		Fancy.Label: Fancy
+	}
+
+	DepletionDirection: {
+		Symmetrical.Label: Symmetrical
+		RightToLeft.Label: Right to Left
+		Tooltip: ""
+	}
+}
