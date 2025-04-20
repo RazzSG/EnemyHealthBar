@@ -48,10 +48,25 @@ public sealed class FancyHealthBar : HealthBar
             }
         }
         
-        targetNPC.TryGetGlobalNPC(out FancyHealthBarGlobalNPC npcData);
-
+        Player targetPlayer = null;
+        foreach (Player player in Main.ActivePlayers)
+        {
+            if (player.active && player.statLife == health && player.statLifeMax2 == maxHealth)
+            {
+                targetPlayer = player;
+                break;
+            }
+        }
+        
+        float damageFillPercent = 1f;
+        
+        if (targetNPC != null && targetNPC.TryGetGlobalNPC(out FancyHealthBarGlobalNPC npcData))
+            damageFillPercent = npcData.DamageFillPercent;
+        else if (targetPlayer != null && targetPlayer.TryGetModPlayer(out FancyHealthBarPlayer playerData))
+            damageFillPercent = playerData.DamageFillPercent;
+        
         int fillWidth = Math.Max(2, (int)(barWidth * currentHealth));
-        int tailWidth = Math.Max(2, (int)(barWidth * npcData.DamageFillPercent));
+        int tailWidth = Math.Max(2, (int)(barWidth * damageFillPercent));
         Vector2 fillPosition = Vector2.Zero;
         Vector2 tailPosition = Vector2.Zero;
         Rectangle fillRect = Rectangle.Empty;
@@ -145,8 +160,6 @@ public class FancyHealthBarGlobalNPC : GlobalNPC
         return true;
     }
     
-    
-    
     public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
     {
         binaryWriter.Write(DamageFillPercent);
@@ -155,5 +168,32 @@ public class FancyHealthBarGlobalNPC : GlobalNPC
     public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
     {
         DamageFillPercent = binaryReader.ReadSingle();
+    }
+}
+
+public class FancyHealthBarPlayer : ModPlayer
+{
+    public float DamageFillPercent = 1f;
+    public int FadeDelayTimer;
+    
+    private const float FadeSpeed = 0.15f;
+    private const int DelayTicks = 30;
+    
+    public override void OnHurt(Player.HurtInfo info)
+    {
+        FadeDelayTimer = DelayTicks;
+    }
+    
+    public override void PreUpdate()
+    {
+        float currentHealth = MathHelper.Clamp((float)Player.statLife / Player.statLifeMax2, 0f, 1f);
+        
+        if (DamageFillPercent < currentHealth)
+            DamageFillPercent = currentHealth;
+        
+        if (FadeDelayTimer > 0)
+            FadeDelayTimer--;
+        else if (DamageFillPercent > currentHealth)
+            DamageFillPercent = MathHelper.Lerp(DamageFillPercent, currentHealth, FadeSpeed);
     }
 }
